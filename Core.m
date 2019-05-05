@@ -80,13 +80,7 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     disp(alpha);
 end
 
-% Validate our orthogonal matrix.
-function zeroVal = confirmF(F, vector)
-    [n, ~] = size(vector);
-    randU = rand(n - 1, 1);
-    zeroVal = transpose(vector) * F * randU;
-end
-
+% Utility function.
 function d2 = Squared(input)
     d2 = transpose(input) * input;
 end
