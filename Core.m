@@ -6,23 +6,25 @@
 %@xCov: Estimated covariance matrix of x
 %@yCov: Estimated covariance matrix of y
 function [a, b] = Core(xBar, yBar, xCov, yCov)
+
+% ========CONSTANTS========
 % Tolerance threshould
 tolerance = 1e-5;
 % Maximum iteration amount
 maxIteration = 100;
+
+% ========PREPARATIONS========
+
 % \Bar{x} - \Bar{y}
-% Preparations
-dist = xBar - yBar;
-a0 = dist / Squared(dist);
-% Orthogonal to x - y
-F = GenerateOrthogonal(dist);
+xBarMyBar = xBar - yBar;
+a0 = xBarMyBar / Squared(xBarMyBar);
+% F orthogonal to \Bar{x} - \Bar{y}
+F = GenerateOrthogonal(xBarMyBar);
 
 end
 
-%Determine the orthogonal matrix F given expectation difference.
-%@F: The generated matrix
-%@xBarMyBar: \Bar{x} - \Bar{y}
-function F = GenerateOrthogonal(xBarMyBar)
+function I = confirmF(F)
+    I = transpose(F) * F;
 end
 
 function d2 = Squared(input)
