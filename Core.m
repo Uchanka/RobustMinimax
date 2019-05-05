@@ -32,6 +32,7 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     h = transpose(F) * yCov * a_0;
 
     % ========INIT========
+    a_k = zeros(n);
     % beta_1 = 1, eta_1 = 1, k = 1
     beta_k = 1; eta_k = 1; k = 1;
     % Absolute threshold
@@ -56,13 +57,27 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
         
         % Convergence criterion
         betaEtasum_up = beta_kup + eta_kup;
-        threshold = abs(betaEtasum_up - betaEtasum) / betaEtasum;
+        if (relative)
+            % Use relative error
+            threshold = abs(betaEtasum_up - betaEtasum) / betaEtasum;
+        else
+            % Use absolute error
+            threshold = betaEtasum_up;
+        end
         
+        % Update the parameters
         beta_k = beta_kup;
         eta_k = eta_kup;
         betaEtasum = betaEtasum_up;
         k = k + 1;
     end
+    
+    % ========RETURN========
+    a = a_k;
+    b = transpose(a_k) * xBar - (beta_k) / (betaEtasum);
+    kappa = 1 / betaEtasum;
+    alpha = kappa^2 / (1 + kappa^2);
+    disp(alpha);
 end
 
 % Validate our orthogonal matrix.
