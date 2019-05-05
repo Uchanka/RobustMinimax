@@ -23,8 +23,11 @@ F = GenerateOrthogonal(xBarMyBar);
 
 end
 
-function I = confirmF(F)
-    I = transpose(F) * F;
+% Validate our orthogonal matrix.
+function zeroVal = confirmF(F, vector)
+    [n, ~] = size(vector);
+    randU = rand(n - 1, 1);
+    zeroVal = transpose(vector) * F * randU;
 end
 
 function d2 = Squared(input)

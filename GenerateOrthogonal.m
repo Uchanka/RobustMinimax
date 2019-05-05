@@ -2,7 +2,7 @@
 %@F: The generated matrix
 %@xBarMyBar: \Bar{x} - \Bar{y}
 function F = GenerateOrthogonal(xBarMyBar)
-    [~, n] = size(xBarMyBar);
+    [n, ~] = size(xBarMyBar);
     fCol = zeros(1, n - 1);
     [maxElement, maxIndex] = max(xBarMyBar);
     
@@ -14,6 +14,6 @@ function F = GenerateOrthogonal(xBarMyBar)
         fCol(1, i) = -xBarMyBar(i + 1) / maxElement;
     end
     % The other cols are filled with unit basis
-    I = eye(n - 1);
-    F = [I(1 : maxIndex - 1, :); f; I(maxIndex : n - 1, :)];
+    Iden = eye(n - 1);
+    F = [Iden(1 : maxIndex - 1, :); fCol; Iden(maxIndex : n - 1, :)];
 end
