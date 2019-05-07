@@ -30,7 +30,8 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     % g, h n - 1 vector
     g = transpose(F) * xCov * a_0;
     h = transpose(F) * yCov * a_0;
-
+    [n, ~] = size(xBarMyBar);
+    
     % ========INIT========
     a_k = zeros(n);
     % beta_1 = 1, eta_1 = 1, k = 1
