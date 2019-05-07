@@ -14,6 +14,12 @@ function F = GenerateOrthogonal(xBarMyBar)
         fCol(1, i) = -xBarMyBar(i + 1) / maxElement;
     end
     
+    % In case it degenerates
+    if n == 2
+        F = [-xBarMyBar(2) xBarMyBar(1)];
+        return
+    end
+    
     % The other cols are filled with unit basis
     Iden = eye(n - 1);
     F = [Iden(1 : maxIndex - 1, :); fCol; Iden(maxIndex : n - 1, :)];

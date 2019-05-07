@@ -24,10 +24,10 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     % F orthogonal to \Bar{x} - \Bar{y}
     F = GenerateOrthogonal(xBarMyBar);
     %confirmF(F, xBarMyBar)
-    % G, H n - 1 by n - 1
+    % G, H matrices
     G = transpose(F) * xCov * F;
     H = transpose(F) * yCov * F;
-    % g, h n - 1 vector
+    % g, h vector
     g = transpose(F) * xCov * a_0;
     h = transpose(F) * yCov * a_0;
     [n, ~] = size(xBarMyBar);
