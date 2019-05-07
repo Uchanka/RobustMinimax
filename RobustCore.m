@@ -5,7 +5,10 @@
 %@yBar: Estimated expectation of y
 %@xCov: Estimated covariance matrix of x
 %@yCov: Estimated covariance matrix of y
-function [a, b] = RobustCore(xBar, yBar, xCov, yCov)
+%@xyNu: Estimation error of x's and y's expectation
+%@xRho: Estimation error of x's covariance
+%@yRho: Estimation error of y's covariance
+function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
 
     % ========CONSTANTS========
     % Tolerance threshould
@@ -20,17 +23,19 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov)
     % ========PREPARATIONS========
     % \Bar{x} - \Bar{y}
     xBarMyBar = xBar - yBar;
+    [n, ~] = size(xBarMyBar);
     a_0 = xBarMyBar / Squared(xBarMyBar);
     % F orthogonal to \Bar{x} - \Bar{y}
     F = GenerateOrthogonal(xBarMyBar);
     %confirmF(F, xBarMyBar)
-    % G, H matrices
-    G = transpose(F) * xCov * F;
-    H = transpose(F) * yCov * F;
-    % g, h vector
-    g = transpose(F) * xCov * a_0;
-    h = transpose(F) * yCov * a_0;
-    [n, ~] = size(xBarMyBar);
+    % G, H matrices with robust Covariance
+    xCovRobust = xCov + xRho * eye(n);
+    yCovRobust = yCov + yRho * eye(n);
+    G = transpose(F) * xCovRobust * F;
+    H = transpose(F) * yCovRobust * F;
+    % g, h vector with robust Covariance
+    g = transpose(F) * xCovRobust * a_0;
+    h = transpose(F) * yCovRobust * a_0;
     
     % ========INIT========
     a_k = zeros(n);
@@ -53,8 +58,8 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov)
         a_k = a_0 + F * u_k;
         
         % Updating beta and eta
-        beta_kup = sqrt(transpose(a_k) * xCov * a_k);
-        eta_kup = sqrt(transpose(a_k) * yCov * a_k);
+        beta_kup = sqrt(transpose(a_k) * xCovRobust * a_k);
+        eta_kup = sqrt(transpose(a_k) * yCovRobust * a_k);
         
         % Convergence criterion
         betaEtasum_up = beta_kup + eta_kup;
@@ -77,8 +82,10 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov)
     a = a_k;
     b = transpose(a_k) * xBar - (beta_k) / (betaEtasum);
     kappa = 1 / betaEtasum;
-    alpha = kappa^2 / (1 + kappa^2);
-    disp(alpha);
+    % ========ROBUSTNESS========
+    kappaRobust = kappa - xyNu;
+    alphaRobust = kappaRobust^2 / (1 + kappaRobust^2);
+    disp(alphaRobust);
 end
 
 % Utility function.
