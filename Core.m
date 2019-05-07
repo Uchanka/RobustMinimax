@@ -53,8 +53,8 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
         a_k = a_0 + F * u_k;
         
         % Updating beta and eta
-        beta_kup = sqrt(transpose(a_k) * covX * a_k);
-        eta_kup = sqrt(transpose(a_k) * covY * a_k);
+        beta_kup = sqrt(transpose(a_k) * xCov * a_k);
+        eta_kup = sqrt(transpose(a_k) * yCov * a_k);
         
         % Convergence criterion
         betaEtasum_up = beta_kup + eta_kup;
