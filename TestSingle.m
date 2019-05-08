@@ -3,7 +3,7 @@ function TestSingle
     % Testing
     sampleSize = 50000;
     mXGen = [0 0]';
-    covXGen = [1.0 0.5; 0.5 1.0];
+    covXGen = [1.0 0.0; 0.0 1.0];
     xSeq = mvnrnd(mXGen, covXGen, sampleSize); 
     inSeq = zeros(sampleSize, 2);
     outSeq = zeros(sampleSize, 2);
@@ -13,7 +13,7 @@ function TestSingle
         pt = xSeq(i, :);
         ptX = pt(1);
         ptY = pt(2);
-        if ptX + 0.4 > ptY
+        if 0.3 * ptX + 0.4 > ptY
             inSeqCount = inSeqCount + 1;
             inSeq(inSeqCount, :) = pt;
         else

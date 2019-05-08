@@ -49,7 +49,8 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
         M_LS = (1 / beta_k) * G + (1 / eta_k) * H + deltaI;
         b_LS = -(1 / beta_k) * g - (1 / eta_k) * h;
         % Solving for a
-        u_k = M_LS \ b_LS;
+        % u_k = M_LS \ b_LS;
+        u_k = pcg(M_LS, b_LS);
         a_k = a_0 + F * u_k;
         
         % Updating beta and eta

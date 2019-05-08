@@ -1,9 +1,9 @@
 % Plot the 2D diagram for demonstration
 function TestPlot2D
-    mX = [-2 -2]';
-    mY = [2 2]';
-    covX = [1.4 0.4; 0.4 1.2];
-    covY = [1.2 1.15; 1.15 1.4];
+    mX = [0.1 -1.8]';
+    mY = [-0.1 1.8]';
+    covX = [0.3 0.2; 0.2 0.3];
+    covY = [0.4 0.0; 0.0 0.4];
     
     % Train with known distribution
     [a, b] = Core(mX, mY, covX, covY);
@@ -32,13 +32,14 @@ function TestPlot2D
     disp(worstMisClassifiedRate);
     
     sz = 2.0;
-    scatter(xSeq(:,1), xSeq(:,2), sz, 'MarkerEdgeColor',[.5 0 .5], 'MarkerFaceColor',[.7 0 .7],'LineWidth',1.5);
+    scatter(xSeq(:,1), xSeq(:,2), sz, 'MarkerEdgeColor',[.5 0 .5], 'MarkerFaceColor',[1 0 1],'LineWidth',1.5);
     hold on
-    scatter(ySeq(:,1), ySeq(:,2), sz, 'MarkerEdgeColor',[0 .5 .5], 'MarkerFaceColor',[0 .7 .7],'LineWidth',1.5);
+    scatter(ySeq(:,1), ySeq(:,2), sz, 'MarkerEdgeColor',[0 .5 .5], 'MarkerFaceColor',[0 1 1],'LineWidth',1.5);
     
     [maxEleX, ~] = max(abs(xSeq(:, 1)));
     [maxEleY, ~] = max(abs(ySeq(:, 1)));
     maxEle = max(maxEleX, maxEleY);
     xPlot = - maxEle : maxEle;
     plot(xPlot, -(a(1)/a(2)) * xPlot + (b / a(2)));
+    daspect([1 1 1]);
 end
