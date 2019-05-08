@@ -2,15 +2,15 @@
 function TestExperr
     % Estimation error
     % Error of expectation
-    xyMu = 2.7;
+    xyMu = 3.521;
     % Error of covariance
     xRho = 0.0;
     yRho = 0.0;
     
-    mX = [-0.2 0.01]';
-    mY = [0.2 -0.01]';
-    covX = [0.2 -0.198; -0.198 0.2];
-    covY = [0.2 0.197; 0.197 0.2];
+    mX = [-0.1 -3]';
+    mY = [0.1 3]';
+    covX = [1.0 0.025; 0.025 1.0];
+    covY = [1.0 0.05; 0.05 1.0];
     % Add variation
     eigCovXInv = eig(inv(covX));
     eigCovYInv = eig(inv(covY));
@@ -19,8 +19,8 @@ function TestExperr
     deltaX = sqrt(xyMu / lMaxX);
     deltaY = sqrt(xyMu / lMaxY);
     % Mislead our method on purpose
-    mXShifted = mX + deltaX * [1 0]';
-    mYShifted = mY - deltaY * [1 0]';
+    mXShifted = mX - deltaX * [0 1]';
+    mYShifted = mY - deltaY * [0 1]';
     
     % Train with known distribution
     [a, b] = RobustCore(mXShifted, mYShifted, covX, covY, xyMu, xRho, yRho);
@@ -59,4 +59,5 @@ function TestExperr
     maxEle = ceil(max(maxEleX, maxEleY));
     xPlot = - maxEle : maxEle;
     plot(xPlot, -(a(1)/a(2)) * xPlot + (b / a(2)));
+    daspect([1 1 1]);
 end

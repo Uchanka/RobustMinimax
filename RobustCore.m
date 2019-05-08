@@ -86,9 +86,12 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
     kappaRobust = kappa - xyNu;
     alpha = kappa^2 / (1 + kappa^2);
     alphaRobust = kappaRobust^2 / (1 + kappaRobust^2);
+    % Lower bound without consideration of uncertainty
     disp('Worst misclassification probability without uncertanity:');
     disp(1 - alpha);
+    % Lower bound with consideration of uncertainty
     if kappaRobust < 0.0
+        % Optimal kappa < xyMu, unfeasible, but display it anyway
         disp('Not feasible: Worst probability = 1.0');
     else
         disp('Worst misclassification probability with uncertainty:');
