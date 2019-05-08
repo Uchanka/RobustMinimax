@@ -31,11 +31,11 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
     % G, H matrices with robust Covariance
     xCovRobust = xCov + xRho * eye(n);
     yCovRobust = yCov + yRho * eye(n);
-    G = transpose(F) * xCovRobust * F;
-    H = transpose(F) * yCovRobust * F;
+    G = F' * xCovRobust * F;
+    H = F' * yCovRobust * F;
     % g, h vector with robust Covariance
-    g = transpose(F) * xCovRobust * a_0;
-    h = transpose(F) * yCovRobust * a_0;
+    g = F' * xCovRobust * a_0;
+    h = F' * yCovRobust * a_0;
     
     % ========INIT========
     a_k = zeros(n);
@@ -58,8 +58,8 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
         a_k = a_0 + F * u_k;
         
         % Updating beta and eta
-        beta_kup = sqrt(transpose(a_k) * xCovRobust * a_k);
-        eta_kup = sqrt(transpose(a_k) * yCovRobust * a_k);
+        beta_kup = sqrt(a_k' * xCovRobust * a_k);
+        eta_kup = sqrt(a_k' * yCovRobust * a_k);
         
         % Convergence criterion
         betaEtasum_up = beta_kup + eta_kup;
@@ -80,7 +80,7 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
     
     % ========RETURN========
     a = a_k;
-    b = transpose(a_k) * xBar - (beta_k) / (betaEtasum);
+    b = a_k' * xBar - (beta_k) / (betaEtasum);
     kappa = 1 / betaEtasum;
     % ========ROBUSTNESS========
     kappaRobust = kappa - xyNu;
@@ -102,5 +102,5 @@ end
 
 % Utility function.
 function d2 = Squared(input)
-    d2 = transpose(input) * input;
+    d2 = input' * input;
 end

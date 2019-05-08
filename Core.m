@@ -25,11 +25,11 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     F = GenerateOrthogonal(xBarMyBar);
     %confirmF(F, xBarMyBar)
     % G, H matrices
-    G = transpose(F) * xCov * F;
-    H = transpose(F) * yCov * F;
+    G = F' * xCov * F;
+    H = F' * yCov * F;
     % g, h vector
-    g = transpose(F) * xCov * a_0;
-    h = transpose(F) * yCov * a_0;
+    g = F' * xCov * a_0;
+    h = F' * yCov * a_0;
     [n, ~] = size(xBarMyBar);
     
     % ========INIT========
@@ -53,8 +53,8 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
         a_k = a_0 + F * u_k;
         
         % Updating beta and eta
-        beta_kup = sqrt(transpose(a_k) * xCov * a_k);
-        eta_kup = sqrt(transpose(a_k) * yCov * a_k);
+        beta_kup = sqrt(a_k' * xCov * a_k);
+        eta_kup = sqrt(a_k' * yCov * a_k);
         
         % Convergence criterion
         betaEtasum_up = beta_kup + eta_kup;
@@ -75,7 +75,7 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     
     % ========RETURN========
     a = a_k;
-    b = transpose(a_k) * xBar - (beta_k) / (betaEtasum);
+    b = a_k' * xBar - (beta_k) / (betaEtasum);
     kappa = 1 / betaEtasum;
     alpha = kappa^2 / (1 + kappa^2);
     disp('Worst misclassification probability:');
@@ -84,5 +84,5 @@ end
 
 % Utility function.
 function d2 = Squared(input)
-    d2 = transpose(input) * input;
+    d2 = input' * input;
 end
