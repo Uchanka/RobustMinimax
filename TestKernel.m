@@ -109,10 +109,12 @@ end
 function aKer = getKernelized(input)
     x1 = input(1);
     x2 = input(2);
-    aKer = gaussKer(x1, x2);
+    aKer = quadraticKer(x1, x2);
 end
 
-function aKer = gaussKer(x1, x2)
-    sqrt2 = sqrt(2);
-    aKer = [x2^2 x1^2 sqrt2 * x2 * x1 sqrt2 * x1 * x2 sqrt2 * x2 sqrt2 * x1];
+function aKer = quadraticKer(x1, x2)
+    c = 1.0;
+    sqrt2c = sqrt(2.0 * c);
+    sqrt2 = sqrt(2.0);
+    aKer = [x2^2 x1^2 sqrt2 * x2 * x1 sqrt2 * x1 * x2 sqrt2c * x2 sqrt2c * x1 c];
 end

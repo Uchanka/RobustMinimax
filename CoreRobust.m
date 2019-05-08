@@ -8,7 +8,7 @@
 %@xyNu: Estimation error of x's and y's expectation
 %@xRho: Estimation error of x's covariance
 %@yRho: Estimation error of y's covariance
-function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
+function [a, b] = CoreRobust(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
 
     % ========CONSTANTS========
     % Tolerance threshould

@@ -23,7 +23,7 @@ function TestExperr
     mYShifted = mY - deltaY * [0 1]';
     
     % Train with known distribution
-    [a, b] = RobustCore(mXShifted, mYShifted, covX, covY, xyMu, xRho, yRho);
+    [a, b] = CoreRobust(mXShifted, mYShifted, covX, covY, xyMu, xRho, yRho);
     
     % Testing
     sampleSize = 20000;

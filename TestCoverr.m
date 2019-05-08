@@ -20,7 +20,7 @@ function TestCoverr
     covYShifted = covY + yRho * randOneFrob;
     
     % Train with known distribution
-    [aRob, bRob] = RobustCore(mX, mY, covXShifted, covYShifted, xyMu, xRho, yRho);
+    [aRob, bRob] = CoreRobust(mX, mY, covXShifted, covYShifted, xyMu, xRho, yRho);
     [a, b] = Core(mX, mY, covXShifted, covYShifted);
     
     % Testing
