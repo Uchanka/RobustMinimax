@@ -78,7 +78,8 @@ function [a, b] = Core(xBar, yBar, xCov, yCov)
     b = transpose(a_k) * xBar - (beta_k) / (betaEtasum);
     kappa = 1 / betaEtasum;
     alpha = kappa^2 / (1 + kappa^2);
-    disp(alpha);
+    disp('Worst misclassification probability:');
+    disp(1 - alpha);
 end
 
 % Utility function.

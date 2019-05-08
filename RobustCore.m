@@ -85,7 +85,8 @@ function [a, b] = RobustCore(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
     % ========ROBUSTNESS========
     kappaRobust = kappa - xyNu;
     alphaRobust = kappaRobust^2 / (1 + kappaRobust^2);
-    disp(alphaRobust);
+    disp('Worst misclassification probability with biased estimated expectation:');
+    disp(1 - alphaRobust);
 end
 
 % Utility function.
