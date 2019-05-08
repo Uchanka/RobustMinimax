@@ -1,35 +1,41 @@
 % Plot the 2D diagram for demonstration
-function TestPlot2D
-    mX = [-2 -2]';
-    mY = [2 2]';
+function TestExperr
+    % Estimation error
+    % Error of expectation
+    xyMu = 0.2;
+    % Error of covariance
+    rhoX = 0.0;
+    rhoY = 0.0;
+    
+    mX = [-2 -2];
+    mY = [2 2];
     covX = [1.4 0.4; 0.4 1.2];
     covY = [1.2 1.15; 1.15 1.4];
+    % Add variation
+    eigCovXInv = eig(inv(covX));
+    eigCovYInv = eig(inv(covY));
     
     % Train with known distribution
-    [a, b] = Core(mX, mY, covX, covY);
+    [a, b] = Core(mX', mY', covX, covY);
     
     % Testing
     sampleSize = 50000;
-    xSeq = mvnrnd(mX', covX, sampleSize);
-    ySeq = mvnrnd(mY', covY, sampleSize);
-    %ySeq = mvtrnd(covY, 2, sampleSize);
-    misClassifiedX = 0;
-    misClassifiedY = 0;
+    xSeq = mvnrnd(mX, covX, sampleSize);
+    ySeq = mvnrnd(mY, covY, sampleSize);
+    misClassified = 0;
     for i = 1 : sampleSize
         bX = a' * xSeq(i, :)';
         bY = a' * ySeq(i, :)';
         if bX < b
-            misClassifiedX = misClassifiedX + 1;
+            misClassified = misClassified + 1;
         end
         if bY > b
-            misClassifiedY = misClassifiedY + 1;
+            misClassified = misClassified + 1;
         end
     end
-    misClassifiedRateX = misClassifiedX / (sampleSize);
-    misClassifiedRateY = misClassifiedY / (sampleSize);
-    worstMisClassifiedRate = max(misClassifiedRateX, misClassifiedRateY);
+    misClassifiedRate = misClassified / (2.0 * sampleSize);
     disp('Actual misclassificatoin probablity:');
-    disp(worstMisClassifiedRate);
+    disp(misClassifiedRate);
     
     sz = 2.0;
     scatter(xSeq(:,1), xSeq(:,2), sz, 'MarkerEdgeColor',[.5 0 .5], 'MarkerFaceColor',[.7 0 .7],'LineWidth',1.5);
@@ -40,5 +46,5 @@ function TestPlot2D
     [maxEleY, ~] = max(abs(ySeq(:, 1)));
     maxEle = max(maxEleX, maxEleY);
     xPlot = - maxEle : maxEle;
-    plot(xPlot, -(a(1)/a(2)) * xPlot + (b / a(2)));
+    plot(xPlot, -(a(1)/a(2)) * xPlot + b);
 end
