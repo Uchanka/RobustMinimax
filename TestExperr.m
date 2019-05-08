@@ -11,14 +11,14 @@ function TestExperr
     mY = [0.1 3]';
     covX = [1.0 0.025; 0.025 1.0];
     covY = [1.0 0.05; 0.05 1.0];
-    % Add variation
+    % Add variation to expectation
     eigCovXInv = eig(inv(covX));
     eigCovYInv = eig(inv(covY));
     lMaxX = max(abs(eigCovXInv));
     lMaxY = max(abs(eigCovYInv));
     deltaX = sqrt(xyMu / lMaxX);
     deltaY = sqrt(xyMu / lMaxY);
-    % Mislead our method on purpose
+    % Mislead our classifier on purpose
     mXShifted = mX - deltaX * [0 1]';
     mYShifted = mY - deltaY * [0 1]';
     
