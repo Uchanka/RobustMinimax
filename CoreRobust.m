@@ -92,7 +92,7 @@ function [a, b] = CoreRobust(xBar, yBar, xCov, yCov, xyNu, xRho, yRho)
     % Lower bound with consideration of uncertainty
     if kappaRobust < 0.0
         % Optimal kappa < xyMu, unfeasible, but display it anyway
-        disp('Not feasible: We consider the worst probability = 1.0');
+        disp('Not feasible: We consider the worst probability as 1.0');
     end
     % Display it anyway
     % Lower bound with consideration of uncertainty
