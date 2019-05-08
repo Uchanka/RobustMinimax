@@ -58,11 +58,11 @@ for j=1:130
    
 end
 
-happy_train = reshape(happy_train,[32*32,300]);
-sad_train = reshape(sad_train,[32*32,300]);
+happy_train = reshape(happy_train,[32*32,300])/256.0;
+sad_train = reshape(sad_train,[32*32,300])/256.0;
 
-happy_test = reshape(happy_test,[32*32,130]);
-sad_test = reshape(sad_test,[32*32,130]);
+happy_test = reshape(happy_test,[32*32,130])/256.0;
+sad_test = reshape(sad_test,[32*32,130])/256.0;
 
 mu_happy = mean(happy_train,2);
 mu_sad = mean(sad_train,2);
