@@ -26,7 +26,7 @@ function TestExperr
     [a, b] = CoreRobust(mXShifted, mYShifted, covX, covY, xyMu, xRho, yRho);
     
     % Testing
-    sampleSize = 20000;
+    sampleSize = 50000;
     xSeq = mvnrnd(mX, covX, sampleSize);
     ySeq = mvnrnd(mY, covY, sampleSize);
     misClassifiedX = 0;
