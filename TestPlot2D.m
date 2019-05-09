@@ -6,7 +6,8 @@ function TestPlot2D
     covY = [0.4 0.0; 0.0 0.4];
     
     % Train with known distribution
-    [a, b] = CoreCVX(mX, mY, covX, covY);
+    [a, b] = Core(mX, mY, covX, covY);
+    %[a, b] = CoreCVX(mX, mY, covX, covY);
     
     % Testing
     sampleSize = 50000;
