@@ -4,11 +4,11 @@ clc
 data_happy_dir = '.\AffectNet\data_happy\';
 data_sad_dir = '.\AffectNet\data_sad\';
 
-happy_train = zeros(32,32,300);
-sad_train = zeros(32,32,300);
+happy_train = zeros(64,64,300);
+sad_train = zeros(64,64,300);
 
-happy_test = zeros(32,32,130);
-sad_test = zeros(32,32,130);
+happy_test = zeros(64,64,130);
+sad_test = zeros(64,64,130);
 
 for i=1:300
     
@@ -58,11 +58,11 @@ for j=1:130
    
 end
 
-happy_train = reshape(happy_train,[32*32,300])/256.0;
-sad_train = reshape(sad_train,[32*32,300])/256.0;
+happy_train = reshape(happy_train,[64*64,300])/256.0;
+sad_train = reshape(sad_train,[64*64,300])/256.0;
 
-happy_test = reshape(happy_test,[32*32,130])/256.0;
-sad_test = reshape(sad_test,[32*32,130])/256.0;
+happy_test = reshape(happy_test,[64*64,130])/256.0;
+sad_test = reshape(sad_test,[64*64,130])/256.0;
 
 mu_happy = mean(happy_train,2);
 mu_sad = mean(sad_train,2);
@@ -71,5 +71,11 @@ cov_happy = cov(happy_train');
 cov_sad = cov(sad_train');
 
 
-[a, b] = Core(mu_happy, mu_sad, cov_happy, cov_sad);
+[a, b] = CoreCVX(mu_happy, mu_sad, cov_happy, cov_sad);
+
+happy = (a'*happy_test - b)>0;
+happy_accuracy = sum(happy)/130;
+
+sad = (a'*sad_test - b)<0;
+sad_accuracy = sum(sad)/130;
 
