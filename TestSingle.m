@@ -3,12 +3,12 @@ function TestSingle
     % Testing
     sampleSize = 50000;
     mXGen = [0 0]';
-    covXGen = [1.0 0.0; 0.0 1.0];
+    covXGen = [1.0 0.5; 0.5 1.5];
     xSeq = mvnrnd(mXGen, covXGen, sampleSize); 
     inSeq = zeros(sampleSize, 2);
-    outSeq = zeros(sampleSize, 2);
+    %outSeq = zeros(sampleSize, 2);
     inSeqCount = 0;
-    outSeqCount = 0;
+    %outSeqCount = 0;
     for i = 1 : sampleSize
         pt = xSeq(i, :);
         ptX = pt(1);
@@ -17,12 +17,12 @@ function TestSingle
             inSeqCount = inSeqCount + 1;
             inSeq(inSeqCount, :) = pt;
         else
-            outSeqCount = outSeqCount + 1;
-            outSeq(outSeqCount, :) = pt;
+            %outSeqCount = outSeqCount + 1;
+            %outSeq(outSeqCount, :) = pt;
         end
     end
     inSeq = inSeq(1 : inSeqCount, :);
-    outSeq = outSeq(1 : outSeqCount, :);
+    %outSeq = outSeq(1 : outSeqCount, :);
     
     alpha = inSeqCount / sampleSize;
     
@@ -47,11 +47,11 @@ function TestSingle
     sz = 2.0;
     scatter(inSeq(:,1), inSeq(:,2), sz, 'MarkerEdgeColor',[.5 0 .5], 'MarkerFaceColor',[.7 0 .7],'LineWidth',1.5);
     hold on
-    scatter(outSeq(:,1), outSeq(:,2), sz, 'MarkerEdgeColor',[0 .5 .5], 'MarkerFaceColor',[0 .7 .7],'LineWidth',1.5);
+    %scatter(outSeq(:,1), outSeq(:,2), sz, 'MarkerEdgeColor',[0 .5 .5], 'MarkerFaceColor',[0 .7 .7],'LineWidth',1.5);
     
     [maxEleIn, ~] = max(abs(inSeq(:, 1)));
-    [maxEleOut, ~] = max(abs(outSeq(:, 1)));
-    maxEle = ceil(max(maxEleIn, maxEleOut));
+    %[maxEleOut, ~] = max(abs(outSeq(:, 1)));
+    maxEle = ceil(maxEleIn);
     xPlot = - maxEle : maxEle;
     plot(xPlot, -(a(1)/a(2)) * xPlot + (b / a(2)));
     daspect([1 1 1]);
