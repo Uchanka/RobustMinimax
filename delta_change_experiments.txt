@@ -1,0 +1,10 @@
+tol      delta     a,b     happy_accuracy   sad_accuracy
+1e-3     1e-10    Complex         /                /
+1e-3     1e-9     double       0.5231         0.7462
+1e-3     1e-8     double       0.7000         0.7154
+1e-3     1e-7     double       0.7077         0.7154
+1e-3     1e-6     double       0.7077         0.7154
+1e-3     1e-5     double       0.7077         0.7154
+1e-3     1e-4     double       0.7154         0.7154
+1e-3     1e-3     double       0.7231         0.7154
+1e-3     1e-2     double       0.7385         0.6816
